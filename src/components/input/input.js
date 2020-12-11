@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
-const Input = ({ text, placeholder }) => {
+const Input = ({ text, placeholder, handler, clear }) => {
+  const ref = React.createRef();
+
+  useEffect(() => {
+    console.log(clear);
+    if (clear) {
+      ref.current.clear();
+    }
+  }, []);
+
   return (
     <View style={styles.view}>
       <Text style={styles.text}>{text}</Text>
-      <TextInput style={styles.input} placeholder={placeholder}></TextInput>
+      <TextInput
+        style={styles.input}
+        placeholder={placeholder}
+        ref={ref}
+        onChangeText={(value) => handler(value)}
+      ></TextInput>
     </View>
   );
 };
